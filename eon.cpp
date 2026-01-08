@@ -1,20 +1,38 @@
-// /usr/local/bin/eon
-
 #include <iostream>
+#include <cstring>
 #include </opt/Eon/frameworks/version.hpp>
+#include </opt/Eon/frameworks/docs.hpp>
 
 int main(int argc, char* argv[])
 {
-  if (argc > 2)
-  {
-    const char* arg1 = argv[1];
-    if (arg1 == "--version")
+    if (argc >= 2)
     {
-      printVersion();
+        if (std::strcmp(argv[1], "--version") == 0)
+        {
+            printVersion();
+            return 0;
+        }
+        else if (std::strcmp(argv[1], "--doc") == 0)
+        {
+            if (argc >= 3)
+            {
+                handleDoc(std::string(argv[2]));
+                return 0;
+            }
+            else
+            {
+                std::cerr << "No docs.\n";
+                return 1;
+            }
+        }
+        else
+        {
+            std::cout << "Unknown argument: " << argv[1] << '\n';
+            return 1;
+        }
     }
-  }
-  else
-  {
-    std::cout << "No input files";
-  }
+
+    std::cout << "No input files\n";
+    return 0;
 }
+
